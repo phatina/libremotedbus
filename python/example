@@ -1,0 +1,24 @@
+#!/usr/bin/python
+
+from cockpit.remote import RemoteDBus
+
+
+if __name__ == '__main__':
+    # Create a remote D-Bus object for a dummy service.
+    remote = RemoteDBus(
+        url='ws://virt-rawhide:9090/socket',
+        username='root',
+        password='root',
+        service='org.dummy.service',
+        bus='system',
+        no_verification=True,
+        debug=False)
+
+    print remote(
+        '/org/dummy/service',
+        'org.dummy.service',
+        'org.dummy.service.DummyMethod',
+        [],
+        require_response=False)
+
+    remote.close()
